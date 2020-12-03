@@ -1,2 +1,4 @@
-# aoc
-Advent Of Code
+# Advent Of Code (solutions)
+
+by Andrew Brampton (bramp.net)
+
