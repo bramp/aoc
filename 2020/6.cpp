@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-    ifstream file ("6.txt");
+    ifstream file ("2020/6.txt");
     if (!file.is_open()) {
         cout << "Failed to open file: " << strerror(errno) << endl;
         return -1;

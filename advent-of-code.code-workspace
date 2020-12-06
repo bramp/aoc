@@ -73,7 +73,10 @@
 			"type_traits": "cpp",
 			"typeinfo": "cpp",
 			"unordered_map": "cpp",
-			"utility": "cpp"
+			"utility": "cpp",
+			"filesystem": "cpp",
+			"map": "cpp",
+			"__memory": "cpp"
 		}
 	}
 }

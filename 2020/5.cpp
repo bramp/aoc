@@ -31,7 +31,7 @@ int seat_id(string line) {
 }
 
 int main() {
-    ifstream file ("5.txt");
+    ifstream file ("2020/5.txt");
     if (!file.is_open()) {
         cout << "Failed to open file: " << strerror(errno) << endl;
         return -1;
