@@ -18,8 +18,8 @@ int main() {
     int answer1 = 0;
     int answer2 = 0;
 
-    int size = 0;
-    map<char, int> group;
+    int size = 0; // Size of the group
+    map<char, int> group; // Yes answers in the group
 
     string line; 
     while (getline(file, line, '\n')) {
