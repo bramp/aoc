@@ -8,9 +8,16 @@
 
 using namespace std;
 
-bool is_valid(map<string, string> passport) {
+bool is_valid_1(map<string, string> passport) {
     // Part 1
     if (!(passport.size() == 8 || (passport.size() == 7 && passport.find("cid") == passport.end()))) {
+        return false;
+    }
+    return true;
+}
+
+bool is_valid_2(map<string, string> passport) {
+    if (!is_valid_1(passport)) {
         return false;
     }
 
@@ -70,13 +77,14 @@ bool is_valid(map<string, string> passport) {
 }
 
 int main() {
-    ifstream file ("4.txt");
+    ifstream file ("2020/4.txt");
     if (!file.is_open()) {
         cout << "Failed to open file: " << strerror(errno) << endl;
         return -1;
     }
 
-    int valid = 0;
+    int valid1 = 0;
+    int valid2 = 0;
     map<string, string> passport;
 
     string line; 
@@ -87,10 +95,12 @@ int main() {
         // This also assume the file ends in a new line.
         if (line == "") {
             // Handle the passport
-            if (is_valid(passport)) {
-                valid++;
+            if (is_valid_1(passport)) {
+                valid1++;
             }
-
+            if (is_valid_2(passport)) {
+                valid2++;
+            }
             passport.clear();
             continue;
         }
@@ -110,6 +120,7 @@ int main() {
         }
     }
 
-    cout << "Valid: " << valid << endl;
+    cout << "Answer 4.1: " << valid1 << endl;
+    cout << "Answer 4.2: " << valid2 << endl;
     file.close();
 }

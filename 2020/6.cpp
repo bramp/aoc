@@ -48,8 +48,8 @@ int main() {
         }
     }
 
-    cout << "Answer 1: " << answer1 << endl;
-    cout << "Answer 2: " << answer2 << endl;
+    cout << "Answer 6.1: " << answer1 << endl;
+    cout << "Answer 6.2: " << answer2 << endl;
 
     file.close();
 }

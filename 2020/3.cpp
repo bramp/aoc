@@ -408,9 +408,9 @@ int main() {
         map.push_back(row);
     }
 
-    print(map);
+    // print(map);
 
-    cout << "Answer 1: " << slope(map, 3, 1) << endl;
+    cout << "Answer 3.1: " << slope(map, 3, 1) << endl;
 
     long answer = 1;
 
@@ -420,5 +420,5 @@ int main() {
     answer *= slope(map, 7, 1);
     answer *= slope(map, 1, 2);
 
-    cout << "Answer 2: " << answer << endl;
+    cout << "Answer 3.2: " << answer << endl;
 }

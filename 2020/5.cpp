@@ -52,11 +52,11 @@ int main() {
         //cout << line << " " << id << endl;
     }
 
-    cout << "  Max: " << max_id << endl;
+    cout << "Answer 5.1: " << max_id << endl;
 
     for (int i = 0; i < max_id; i++) {
         if (!found[i] && found[i - 1] && found[i + 1]) {
-            cout << "Empty: " << i << endl;
+            cout << "Answer 5.2: " << i << endl;
             break;
         }
     }

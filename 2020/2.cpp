@@ -1051,12 +1051,11 @@ int main() {
         // Rule 2
         bool valid2 = (password[min - 1] == letter) ^ (password[max - 1] == letter);
 
-        cout << line << "\t" << (valid1 ? "Good" : "Bad") << "\t" << (valid2 ? "Good" : "Bad") << endl;
+        //cout << line << "\t" << (valid1 ? "Good" : "Bad") << "\t" << (valid2 ? "Good" : "Bad") << endl;
         count1 += valid1;
         count2 += valid2;        
     }
 
-    cout << "Valid passwords: " << endl;
-    cout << "  Rule 1: " << count1 << endl;
-    cout << "  Rule 2: " << count2 << endl;
+    cout << "Answer 2.1: " << count1 << endl;
+    cout << "Answer 2.2: " << count2 << endl;
 }
