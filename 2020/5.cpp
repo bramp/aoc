@@ -8,6 +8,28 @@
 
 using namespace std;
 
+int seat_id(string line) {
+    boost::trim(line);
+
+    int row_min = 0;
+    int row_max = 127;
+    int col_min = 0;
+    int col_max = 7;
+    for (char c : line) {
+        if (c == 'F') {
+            row_max = row_min + (row_max - row_min) / 2;
+        } else if (c == 'B') {
+            row_min = row_min + (row_max - row_min) / 2 + 1;
+        } else if (c == 'L') {
+            col_max = col_min + (col_max - col_min) / 2;
+        } else if (c == 'R') {
+            col_min = col_min + (col_max - col_min) / 2 + 1;
+        }
+    }
+
+    return row_min * 8 + col_min;
+}
+
 int main() {
     ifstream file ("5.txt");
     if (!file.is_open()) {
@@ -20,25 +42,8 @@ int main() {
 
     string line; 
     while (getline(file, line, '\n')) {
-        boost::trim(line);
+        int id = seat_id(line);
 
-        int row_min = 0;
-        int row_max = 127;
-        int col_min = 0;
-        int col_max = 7;
-        for (char c : line) {
-            
-            if (c == 'F') {
-                row_max = row_min + (row_max - row_min) / 2;
-            } else if (c == 'B') {
-                row_min = row_min + (row_max - row_min) / 2 + 1;
-            } else if (c == 'L') {
-                col_max = col_min + (col_max - col_min) / 2;
-            } else if (c == 'R') {
-                col_min = col_min + (col_max - col_min) / 2 + 1;
-            }
-        }
-        int id = row_min * 8 + col_min;
         if (id > max_id) {
             max_id = id;
         }
