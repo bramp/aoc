@@ -348,6 +348,11 @@ string input = R"(
 ..........#................#.##
 )";
 
+/**
+ * Prints a vector<vector<char>>.
+ * 
+ * @param map 
+ */
 void print(vector<vector<char>> map) {
     for (int y = 0; y < map.size(); y++) {
         for (int x = 0; x < map[y].size(); x++) {
@@ -357,6 +362,14 @@ void print(vector<vector<char>> map) {
     }
 }
 
+/**
+ * Returns how many trees in the map you would hit with this slope.
+ * 
+ * @param map 
+ * @param dx 
+ * @param dy 
+ * @return int 
+ */
 int slope(const vector<vector<char>> &map, int dx, int dy) {
     int x = dx;
     int y = dy;
