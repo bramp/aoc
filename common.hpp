@@ -57,7 +57,9 @@ std::ostream& operator<< (std::ostream& out, const struct bounds& b) {
 template <typename T>
 std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
     out << '[';
-    std::copy (v.begin(), v.end(), std::ostream_iterator<T>(out, ", "));
+    for (const auto & e : v) {
+        out << e << ", ";
+    }
     out << "\b\b]";
     return out;
 }
