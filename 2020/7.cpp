@@ -10,6 +10,8 @@
 
 using namespace std;
 
+// search updates `found` to contain all the bags that can directly or indirectly contain the target.
+// bags assumes a child->parent maping.
 void search(set<string> * found, const map<string, map<string, int>> & bags, string target) {
     // Bag doesn't exist :/
     if (bags.find(target) == bags.end()) {
@@ -26,6 +28,8 @@ void search(set<string> * found, const map<string, map<string, int>> & bags, str
     }
 }
 
+// search2 returns the count of bags within the target bag.
+// bags assumes a parent->child mapping.
 int search2(const map<string, map<string, int>> & bags, string target) {
     // Bag doesn't exist, so assume it contains nothing.
     if (bags.find(target) == bags.end()) {
