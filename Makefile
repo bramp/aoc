@@ -19,6 +19,6 @@ all: $(shell find . -name "[0-9]*.cpp" | sed s_\./_bin/_ | sed s_.cpp__)
 $(OUTDIR)/%.o: %.cpp Makefile
 	$(CC) -c $(CFLAGS) $< -o $@
 
-$(OUTDIR)/%: %.cpp Makefile
-	$(CC) $(LDFLAGS) $(CFLAGS) $< -o $@
+$(OUTDIR)/%: %.cpp common.cpp Makefile
+	$(CC) $(LDFLAGS) $(CFLAGS) $< common.cpp -o $@
 
