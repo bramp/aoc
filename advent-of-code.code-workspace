@@ -76,7 +76,13 @@
 			"utility": "cpp",
 			"filesystem": "cpp",
 			"map": "cpp",
-			"__memory": "cpp"
+			"__memory": "cpp",
+			"csignal": "cpp",
+			"list": "cpp",
+			"strstream": "cpp",
+			"thread": "cpp",
+			"typeindex": "cpp",
+			"variant": "cpp"
 		}
 	}
 }
