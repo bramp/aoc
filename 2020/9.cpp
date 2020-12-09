@@ -22,21 +22,21 @@ bool sum(const vector<int> & nums, int offset, int target) {
 }
 
 int range(const vector<int> & nums, int offset, int target) {
-    for (int len = 0; len < nums.size() - offset; len++) {
-        int smallest = INT_MAX;
-        int largest = 0;
-        int total = 0;
-        for (int i = 0; i < len; i++) {
-            total += nums[offset + i];
+    int smallest = INT_MAX;
+    int largest = 0;
+    int total = 0;
+    int i = offset;
+    while (total < target && i < nums.size()) {
+        total += nums[i];
 
-            smallest = min(smallest, nums[offset + i]);
-            largest = max(largest, nums[offset + i]);
-        }
-        if (total == target) {
-            return smallest + largest;
-        }
+        smallest = min(smallest, nums[i]);
+        largest = max(largest, nums[i]);
+
+        i++;
     }
-    
+    if (total == target) {
+        return smallest + largest;
+    }
     return 0;
 }
 
