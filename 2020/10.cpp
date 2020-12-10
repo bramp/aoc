@@ -13,7 +13,9 @@ using namespace std;
 map<int, long> mem;
 
 long dfs(const vector<int> & adapters, int root) {
-    if (root >= adapters.size() - 1) {
+    assert(root >= 0 && root < adapters.size());
+
+    if (root == adapters.size() - 1) {
         return 1;
     }
 
