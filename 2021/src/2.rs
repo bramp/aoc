@@ -1,6 +1,5 @@
 use std::fs::File;
 use std::io::{self, prelude::*, BufReader};
-use std::vec::Vec;
 
 #[macro_use]
 extern crate text_io;
