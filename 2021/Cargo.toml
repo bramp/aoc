@@ -24,6 +24,10 @@ name = "5"
 path = "src/5.rs"
 
 [[bin]]
+name = "6"
+path = "src/6.rs"
+
+[[bin]]
 name = "template"
 path = "src/template.rs"
 test = false
