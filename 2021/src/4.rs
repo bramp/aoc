@@ -61,12 +61,13 @@ impl Board {
 fn read_input(filename: &str) -> io::Result<(Vec<u8>, Vec<Board>)> {
     let file = File::open(filename)?;
     let reader = BufReader::new(file);
-    let lines : Vec<String> = reader
+    let lines: Vec<String> = reader
         .lines()
         .map(|line| line.expect("Could not parse line"))
         .collect();
 
-    let calls = lines[0].split(',')
+    let calls = lines[0]
+        .split(',')
         .map(|x| x.parse::<u8>().unwrap())
         .collect();
 
@@ -74,10 +75,13 @@ fn read_input(filename: &str) -> io::Result<(Vec<u8>, Vec<Board>)> {
     for board in lines[1..].chunks(6) {
         let mut b = Board::new();
 
-        for line in board.iter().skip(1) { // Skip blank line
-            b.board.push(line.split_whitespace()
-                .map(|x| x.parse::<u8>().unwrap())
-                .collect());
+        for line in board.iter().skip(1) {
+            // Skip blank line
+            b.board.push(
+                line.split_whitespace()
+                    .map(|x| x.parse::<u8>().unwrap())
+                    .collect(),
+            );
         }
         boards.push(b);
     }
@@ -91,7 +95,7 @@ fn part1(filename: &str) -> io::Result<i32> {
         for board in boards.iter_mut() {
             board.mark(call);
             if board.solved() {
-                return Ok((call as i32) * board.unmarked_sum())
+                return Ok((call as i32) * board.unmarked_sum());
             }
         }
     }
@@ -107,7 +111,7 @@ fn part2(filename: &str) -> io::Result<i32> {
         }
 
         if boards.len() == 1 && boards[0].solved() {
-            return Ok((call as i32) * boards[0].unmarked_sum())
+            return Ok((call as i32) * boards[0].unmarked_sum());
         }
 
         boards.retain(|board| !board.solved());

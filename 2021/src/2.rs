@@ -14,13 +14,19 @@ fn part1() -> io::Result<i32> {
 
     for line in reader.lines() {
         let line = line?;
-        let (command, value) : (String, i32);
+        let (command, value): (String, i32);
         scan!(line.bytes() => "{} {}", command, value);
         match command.as_str() {
             "forward" => pos += value,
             "down" => depth += value,
-            "up" => if value > depth { depth = 0; } else { depth -= value;},
-            _ => panic!()
+            "up" => {
+                if value > depth {
+                    depth = 0;
+                } else {
+                    depth -= value;
+                }
+            }
+            _ => panic!(),
         }
     }
 
@@ -37,16 +43,16 @@ fn part2() -> io::Result<i32> {
 
     for line in reader.lines() {
         let line = line?;
-        let (command, value) : (String, i32);
+        let (command, value): (String, i32);
         scan!(line.bytes() => "{} {}", command, value);
         match command.as_str() {
             "forward" => {
                 pos += value;
                 depth += aim * value;
-            },
+            }
             "down" => aim += value,
             "up" => aim -= value,
-            _ => panic!()
+            _ => panic!(),
         }
     }
 

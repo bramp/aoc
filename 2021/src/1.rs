@@ -3,7 +3,7 @@ use std::io::{self, prelude::*, BufReader};
 use std::vec::Vec;
 
 #[allow(dead_code)]
-fn part1_simple()  -> io::Result<i32> {
+fn part1_simple() -> io::Result<i32> {
     let file = File::open("data/1.txt")?;
     let reader = BufReader::new(file);
 
@@ -20,34 +20,35 @@ fn part1_simple()  -> io::Result<i32> {
     Ok(answer)
 }
 
-fn part1()  -> io::Result<usize> {
+fn part1() -> io::Result<usize> {
     let file = File::open("data/1.txt")?;
     let reader = BufReader::new(file);
 
-    Ok(reader.lines()
+    Ok(reader
+        .lines()
         .map(|line| line.expect("Could not parse line"))
         .map(|x| x.parse::<i32>().unwrap())
         .collect::<Vec<i32>>()
         .windows(2)
-        .filter(|x| x[0] < x[1] )
+        .filter(|x| x[0] < x[1])
         .count())
-
 }
 
 #[allow(dead_code)]
-fn part2_simple()  -> io::Result<i32> {
+fn part2_simple() -> io::Result<i32> {
     let file = File::open("data/1.txt")?;
     let reader = BufReader::new(file);
 
     let mut answer = 0;
-    let lines : Vec<i32> = reader.lines()
+    let lines: Vec<i32> = reader
+        .lines()
         .map(|line| line.expect("Could not parse line"))
         .map(|x| x.parse::<i32>().unwrap())
         .collect();
 
     for i in 0..lines.len() - 3 {
         let a = lines[i] + lines[i + 1] + lines[i + 2];
-        let b = lines[i+1] + lines[i + 2] + lines[i + 3];
+        let b = lines[i + 1] + lines[i + 2] + lines[i + 3];
         if b > a {
             answer += 1
         }
@@ -57,19 +58,19 @@ fn part2_simple()  -> io::Result<i32> {
     Ok(answer)
 }
 
-fn part2()  -> io::Result<usize> {
+fn part2() -> io::Result<usize> {
     let file = File::open("data/1.txt")?;
     let reader = BufReader::new(file);
 
-    Ok(reader.lines()
+    Ok(reader
+        .lines()
         .map(|line| line.expect("Could not parse line"))
         .map(|x| x.parse::<i32>().unwrap())
         .collect::<Vec<i32>>()
         .windows(4)
         .map(|x| (x[0] + x[1] + x[2], x[1] + x[2] + x[3]))
-        .filter(|x| x.0 < x.1 )
+        .filter(|x| x.0 < x.1)
         .count())
-
 }
 
 fn main() -> io::Result<()> {

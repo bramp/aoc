@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, prelude::*, BufReader};
 
-
 fn part1(path: &str, digits: usize) -> io::Result<i32> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
@@ -20,21 +19,27 @@ fn part1(path: &str, digits: usize) -> io::Result<i32> {
         }
     }
 
-    let gamma = digits_freq.iter()
-        .map(|freq| freq.iter()
-            .max_by(|a, b| a.1.cmp(b.1)) // Find the most popular value
-            .map(|(k, _v)| k)            // Return just the key
-            .unwrap()
-        ).collect::<String>();
+    let gamma = digits_freq
+        .iter()
+        .map(|freq| {
+            freq.iter()
+                .max_by(|a, b| a.1.cmp(b.1)) // Find the most popular value
+                .map(|(k, _v)| k) // Return just the key
+                .unwrap()
+        })
+        .collect::<String>();
 
-    let epsilon = gamma.chars().map(|x| if x == '0' { '1' } else { '0' } ).collect::<String>();
+    let epsilon = gamma
+        .chars()
+        .map(|x| if x == '0' { '1' } else { '0' })
+        .collect::<String>();
 
     let power = i32::from_str_radix(&gamma, 2).unwrap() * i32::from_str_radix(&epsilon, 2).unwrap();
 
     Ok(power)
 }
 
-fn digit_freq(list: &[String], position: usize) -> HashMap::<char, usize> {
+fn digit_freq(list: &[String], position: usize) -> HashMap<char, usize> {
     let mut freq = HashMap::<char, usize>::new();
     for s in list {
         *freq.entry(s.chars().nth(position).unwrap()).or_default() += 1;
@@ -43,14 +48,15 @@ fn digit_freq(list: &[String], position: usize) -> HashMap::<char, usize> {
     freq
 }
 
-fn max_freq(freq : &HashMap::<char, usize>, default: char) -> char {
+fn max_freq(freq: &HashMap<char, usize>, default: char) -> char {
     if freq[&'0'] == freq[&'1'] {
-        return default
+        return default;
     }
 
-    *freq.iter()
+    *freq
+        .iter()
         .max_by(|a, b| a.1.cmp(b.1)) // Find the most popular value
-        .map(|(k, _v)| k)            // Return just the key
+        .map(|(k, _v)| k) // Return just the key
         .unwrap()
 }
 
@@ -61,7 +67,8 @@ fn oxygen(lines: &[String], digits: usize) -> i32 {
         let freq = digit_freq(&lines, i);
         let c = max_freq(&freq, '1');
 
-        lines = lines.iter()
+        lines = lines
+            .iter()
             .filter(|x| x.chars().nth(i).unwrap() == c)
             .cloned()
             .collect();
@@ -85,7 +92,8 @@ fn co2(lines: &[String], digits: usize) -> i32 {
         let c = max_freq(&freq, '1');
         let c = if c == '0' { '1' } else { '0' };
 
-        lines = lines.iter()
+        lines = lines
+            .iter()
             .filter(|x| x.chars().nth(i).unwrap() == c)
             .cloned()
             .collect();
@@ -104,7 +112,7 @@ fn part2(path: &str, digits: usize) -> io::Result<i32> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
 
-    let lines : Vec<String> = reader
+    let lines: Vec<String> = reader
         .lines()
         .map(|line| line.expect("Could not parse line"))
         .collect();
@@ -136,6 +144,5 @@ mod tests {
     fn test_part2() {
         assert_eq!(part2("data/3_test.txt", 5).unwrap(), 230);
         assert_eq!(part2("data/3.txt", 12).unwrap(), 4474944);
-        
     }
 }
