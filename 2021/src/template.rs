@@ -7,8 +7,12 @@ fn part1() -> io::Result<i32> {
 
     let file = File::open("data/TODO.txt")?;
     let reader = BufReader::new(file);
+    let lines : Vec<String> = reader
+        .lines()
+        .map(|line| line.expect("Could not parse line"))
+        .collect();
 
-    for _line in reader.lines() {
+    for _line in lines {
 
     }
 
@@ -20,8 +24,12 @@ fn part2() -> io::Result<i32> {
 
     let file = File::open("data/TODO.txt")?;
     let reader = BufReader::new(file);
+    let lines : Vec<String> = reader
+        .lines()
+        .map(|line| line.expect("Could not parse line"))
+        .collect();
 
-    for _line in reader.lines() {
+    for _line in lines {
 
     }
 

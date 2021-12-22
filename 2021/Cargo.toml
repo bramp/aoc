@@ -18,6 +18,7 @@ path = "src/3.rs"
 [[bin]]
 name = "template"
 path = "src/template.rs"
+test = false
 
 [dependencies]
 text_io = "0.1.9"
