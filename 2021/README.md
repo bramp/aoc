@@ -6,6 +6,6 @@ by Andrew Brampton (https://bramp.net)
 # Run all tests
 cargo test
 
-# Run week 1
+# Run day 1
 cargo run --bin 1
 ```
