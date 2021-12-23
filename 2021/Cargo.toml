@@ -27,10 +27,14 @@ path = "src/5.rs"
 name = "6"
 path = "src/6.rs"
 
-
 [[bin]]
 name = "7"
 path = "src/7.rs"
+
+[[bin]]
+name = "8"
+path = "src/8.rs"
+
 
 [[bin]]
 name = "template"
@@ -38,4 +42,6 @@ path = "src/template.rs"
 test = false
 
 [dependencies]
+bimap = "0.6.1"
+itertools = "0.10.3"
 text_io = "0.1.9"
