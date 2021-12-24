@@ -1,7 +1,7 @@
+use std::cmp::Reverse;
+use priority_queue::PriorityQueue;
 use std::collections::HashMap;
-use std::cmp::Ordering;
 
-use std::collections::HashSet;
 use std::fs::File;
 use std::io::{self, prelude::*, BufReader};
 
@@ -31,6 +31,7 @@ fn neighbors(grid: &[Vec<u8>], start: (usize, usize)) -> Vec<(usize, usize)> {
 type CostMap = HashMap<(usize, usize), i32>;
 type NextMap = HashMap<(usize, usize), (usize, usize)>;
 
+/*
 #[derive(Eq)]
 struct NodeCost {
     pub pos: (usize, usize),
@@ -54,39 +55,37 @@ impl PartialEq for NodeCost {
         self.cost == other.cost
     }
 }
+*/
 
 // Using https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm as a source
-// TODO Too slow!
-//  real 0m49.163s
+// Originally didn't use a min heap, reduced time from 49.163s to 0.359s!
 fn dijkstra(grid: Vec<Vec<u8>>, start: (usize, usize)) -> (CostMap, NextMap) {
-    let mut q = HashSet::new();
+    let mut q = PriorityQueue::new();
     let mut dist = HashMap::<(usize, usize), i32>::new();
     let mut prev = HashMap::<(usize, usize), (usize, usize)>::new();
 
-    for (y, row) in grid.iter().enumerate() {
-        for x in 0..row.len() {
-            dist.insert((x, y), i32::MAX);
-            q.insert((x, y));
-        }
-    }
     dist.insert(start, 0);
 
-    while !q.is_empty() {
-        // u ← vertex in Q with min dist[u]
-        // TODO This can be made better with a min heap.
-        let u = *q.iter().min_by(|a, b| dist[a].cmp(&dist[b])).unwrap();
+    for (y, row) in grid.iter().enumerate() {
+        for x in 0..row.len() {
+            let v = (x, y);
+            if v != start {
+                dist.insert(v, i32::MAX);
+            }
+            q.push(v, Reverse(dist[&v]));
+        }
+    }
 
-        q.remove(&u);
+    while let Some((u, _)) = q.pop() {
+        // u ← Q.extract_min()                    // Remove and return best vertex
 
         for v in neighbors(&grid, u) {
-            if !q.contains(&v){
-                continue;
-            }
-
             let alt = dist[&u] + grid[v.1][v.0] as i32; // Edge cost is the cost of landing on v
             if alt < dist[&v] {
                 dist.insert(v, alt);
                 prev.insert(v, u);
+
+                q.push_increase(v, Reverse(alt));
             }
         }
     }
@@ -116,9 +115,9 @@ fn part1(filename: &str) -> io::Result<i32> {
     Ok(dist[ &(width -1, height - 1) ])
 }
 
+// TODO I feel this is too long now
+// 0m7.044s
 fn part2(filename: &str) -> io::Result<i32> {
-    let answer = 0;
-
     let file = File::open(filename)?;
     let reader = BufReader::new(file);
     let lines: Vec<String> = reader
@@ -126,14 +125,40 @@ fn part2(filename: &str) -> io::Result<i32> {
         .map(|line| line.expect("Could not parse line"))
         .collect();
 
-    for _line in lines {}
+    let mut grid = Vec::<Vec<u8>>::new();
+    for line in lines {
+        let mut final_line = Vec::new();
+        let line : Vec<u8> = line.chars().map(|x| x as u8 - b'0').collect();
 
-    Ok(answer)
+        // We need to repeat the line 5 more times.
+        for i in 0..5 {
+            // Always in range 1 to 9.
+            final_line.extend(line.iter().map(|x| x + i).map(|x| if x > 9 { x - 9 } else { x } ));
+        }
+
+        grid.push(final_line)
+    }
+
+    // Now repeat the grid 5 times
+
+    let mut final_grid = Vec::<Vec<u8>>::new();
+    for i in 0..5 { 
+        for row in &grid {
+            final_grid.push(row.iter().map(|x| x + i).map(|x| if x > 9 { x - 9 } else { x } ).collect());
+        }
+    }
+
+    let height = final_grid.len();
+    let width = final_grid[0].len();
+
+    let (dist, _prev) = dijkstra(final_grid, (0,0));
+
+    Ok(dist[ &(width -1, height - 1) ])
 }
 
 fn main() -> io::Result<()> {
     println!("Part 1: {}", part1("data/15.txt")?);
-    println!("Part 2: {}", part2("data/TODO.txt")?);
+    println!("Part 2: {}", part2("data/15.txt")?);
 
     Ok(())
 }
@@ -150,6 +175,7 @@ mod tests {
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2("data/TODO.txt").unwrap(), 0);
+        assert_eq!(part2("data/15_test.txt").unwrap(), 315);
+        assert_eq!(part2("data/15_test.txt").unwrap(), 3002);
     }
 }
