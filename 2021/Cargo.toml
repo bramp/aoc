@@ -48,6 +48,11 @@ name = "11"
 path = "src/11.rs"
 
 [[bin]]
+name = "12"
+path = "src/12.rs"
+
+
+[[bin]]
 name = "template"
 path = "src/template.rs"
 test = false
@@ -55,4 +60,5 @@ test = false
 [dependencies]
 bimap = "0.6.1"
 itertools = "0.10.3"
+multimap = {version="0.8.3", default-features = false}
 text_io = "0.1.9"
