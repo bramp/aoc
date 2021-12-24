@@ -126,7 +126,7 @@ fn part2(filename: &str) -> io::Result<i32> {
                 // Found 6
                 digits.insert(s.to_string(), 6);
 
-            // otherwise 
+            // otherwise
             } else {
                 // Found 0
                 digits.insert(s.to_string(), 0);
@@ -149,7 +149,8 @@ fn part2(filename: &str) -> io::Result<i32> {
             }
         }
 
-        let num : String = output.iter()
+        let num: String = output
+            .iter()
             .map(|x| digits.get_by_left(x).unwrap())
             .map(|x| x.to_string())
             .collect();
@@ -181,6 +182,5 @@ mod tests {
     fn test_part2() {
         assert_eq!(part2("data/8_test.txt").unwrap(), 61229);
         assert_eq!(part2("data/8.txt").unwrap(), 1091165);
-        
     }
 }

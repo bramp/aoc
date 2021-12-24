@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use multimap::MultiMap;
 use std::collections::HashSet;
 use std::fs::File;
@@ -50,7 +51,6 @@ fn dfs1(maze: &MultiMap<String, String>, stack: &mut Vec<String>, start: &str) -
     paths
 }
 
-// TODO This solution is really slow :(
 fn part2(filename: &str) -> io::Result<i32> {
     let file = File::open(filename)?;
     let reader = BufReader::new(file);
@@ -72,14 +72,14 @@ fn part2(filename: &str) -> io::Result<i32> {
         maze.insert(b, a);
     }
 
-    let mut stack = Vec::<&str>::new();
+    let mut visited = HashMap::<&str, i32>::new();
 
-    let answer = dfs2(&maze, &mut stack, "start");
+    let answer = dfs2(&maze, &mut visited, "start");
 
     Ok(answer)
 }
 
-fn can_visit(stack: &[&str], next: &str) -> bool {
+fn can_visit(visited : &HashMap::<&str, i32>, next: &str) -> bool {
     // Don't revisit start
     if next == "start" {
         return false;
@@ -91,38 +91,39 @@ fn can_visit(stack: &[&str], next: &str) -> bool {
     }
 
     // Have we visited a small cave twice yet?
-    let mut has_dup = false;
-    let mut visited = HashSet::<&str>::new();
-    for n in stack.iter().filter(|x| x.to_lowercase() == **x) {
-        has_dup |= !visited.insert(n);
-        // TODO was 0m16.998s
-        //      now 0m14.126s
-        //      now 0m12.716s
-        //      now 0m11.873s
-    }
+    let has_dup = visited.iter()
+        .any(|(_k, v)| v > &1);
 
-    if visited.contains(next) {
+    if visited.get(next).unwrap_or(&0) > &0 {
         return !has_dup;
     }
 
     true
 }
 
-fn dfs2<'a>(maze: &MultiMap<&str, &'a str>, stack: &mut Vec<&'a str>, start: &'a str) -> i32 {
+fn dfs2<'a>(maze: &MultiMap<&str, &'a str>, visited: &mut HashMap::<&'a str, i32>, start: &'a str) -> i32 {
     if start == "end" {
-        //println!("{:?}", stack);
+        //println!("{:?}", visited);
         return 1;
     }
 
     let mut paths = 0;
+    let is_small = start.to_lowercase() == start;
 
-    stack.push(start);
+    if is_small {
+        // Only keep track of small caves
+        *visited.entry(start).or_default() += 1;
+    }
+
     for n in maze.get_vec(start).unwrap().iter() {
-        if can_visit(stack, n) {
-            paths += dfs2(maze, stack, n);
+        if can_visit(visited, n) {
+            paths += dfs2(maze, visited, n);
         }
     }
-    stack.pop();
+
+    if is_small {
+        *visited.entry(start).or_default() -= 1;
+    }
 
     paths
 }
