@@ -25,9 +25,7 @@ fn part1(filename: &str) -> io::Result<usize> {
         let x = s.next().unwrap();
         let y = s.next().unwrap();
 
-        grid.insert(
-            (x.parse::<i32>().unwrap(),
-                y.parse::<i32>().unwrap()));
+        grid.insert((x.parse::<i32>().unwrap(), y.parse::<i32>().unwrap()));
     }
 
     // TODO skip seems wasteful, I assumed I could reuse the iterator
@@ -47,16 +45,16 @@ fn part1(filename: &str) -> io::Result<usize> {
             'x' => {
                 // Mirror
                 if x > &pos {
-                    fold.insert( (pos - (x-pos), *y ) );
+                    fold.insert((pos - (x - pos), *y));
                 } else if x < &pos {
-                    fold.insert((*x,*y));
+                    fold.insert((*x, *y));
                 };
             }
             'y' => {
                 if y > &pos {
-                    fold.insert( (*x, pos - (y-pos)) );
+                    fold.insert((*x, pos - (y - pos)));
                 } else if y < &pos {
-                    fold.insert((*x,*y));
+                    fold.insert((*x, *y));
                 };
             }
             _ => panic!("Unexpected direction"),
@@ -84,9 +82,7 @@ fn part2(filename: &str) -> io::Result<i32> {
         let x = s.next().unwrap();
         let y = s.next().unwrap();
 
-        grid.insert(
-            (x.parse::<i32>().unwrap(),
-                y.parse::<i32>().unwrap()));
+        grid.insert((x.parse::<i32>().unwrap(), y.parse::<i32>().unwrap()));
     }
 
     // TODO skip seems wasteful, I assumed I could reuse the iterator
@@ -101,16 +97,16 @@ fn part2(filename: &str) -> io::Result<i32> {
                 'x' => {
                     // Mirror
                     if x > &pos {
-                        fold.insert( (pos - (x-pos), *y ) );
+                        fold.insert((pos - (x - pos), *y));
                     } else if x < &pos {
-                        fold.insert((*x,*y));
+                        fold.insert((*x, *y));
                     };
                 }
                 'y' => {
                     if y > &pos {
-                        fold.insert( (*x, pos - (y-pos)) );
+                        fold.insert((*x, pos - (y - pos)));
                     } else if y < &pos {
-                        fold.insert((*x,*y));
+                        fold.insert((*x, *y));
                     };
                 }
                 _ => panic!("Unexpected direction"),

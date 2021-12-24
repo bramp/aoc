@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use multimap::MultiMap;
+use std::collections::HashMap;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io::{self, prelude::*, BufReader};
@@ -79,7 +79,7 @@ fn part2(filename: &str) -> io::Result<i32> {
     Ok(answer)
 }
 
-fn can_visit(visited : &HashMap::<&str, i32>, next: &str) -> bool {
+fn can_visit(visited: &HashMap<&str, i32>, next: &str) -> bool {
     // Don't revisit start
     if next == "start" {
         return false;
@@ -91,8 +91,7 @@ fn can_visit(visited : &HashMap::<&str, i32>, next: &str) -> bool {
     }
 
     // Have we visited a small cave twice yet?
-    let has_dup = visited.iter()
-        .any(|(_k, v)| v > &1);
+    let has_dup = visited.iter().any(|(_k, v)| v > &1);
 
     if visited.get(next).unwrap_or(&0) > &0 {
         return !has_dup;
@@ -101,7 +100,11 @@ fn can_visit(visited : &HashMap::<&str, i32>, next: &str) -> bool {
     true
 }
 
-fn dfs2<'a>(maze: &MultiMap<&str, &'a str>, visited: &mut HashMap::<&'a str, i32>, start: &'a str) -> i32 {
+fn dfs2<'a>(
+    maze: &MultiMap<&str, &'a str>,
+    visited: &mut HashMap<&'a str, i32>,
+    start: &'a str,
+) -> i32 {
     if start == "end" {
         //println!("{:?}", visited);
         return 1;
