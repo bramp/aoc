@@ -1,6 +1,5 @@
 use multimap::MultiMap;
 use std::collections::HashMap;
-use std::collections::HashSet;
 use std::fs::File;
 use std::io::{self, prelude::*, BufReader};
 
