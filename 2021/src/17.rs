@@ -100,7 +100,7 @@ fn part2(filename: &str) -> io::Result<i32> {
     for dx in 1..=t.max_x {
         for dy in t.min_y..=1000 {
             if height(dx, dy, &t).is_some() {
-                hit+=1
+                hit += 1
             }
         }
     }

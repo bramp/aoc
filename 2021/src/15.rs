@@ -30,7 +30,6 @@ fn neighbors(grid: &[Vec<u8>], start: (usize, usize)) -> Vec<(usize, usize)> {
 }
 
 type CostMap = HashMap<(usize, usize), i32>;
-type NextMap = HashMap<(usize, usize), (usize, usize)>;
 
 // Using https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm as a source
 // Originally didn't use a min heap, reduced time from 49.163s to 0.359s!
